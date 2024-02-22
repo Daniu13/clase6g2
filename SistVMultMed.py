@@ -51,41 +51,62 @@ class Mascota:
     
 class sistemaV:
     def __init__(self):
-        self.__lista_mascotas = []
+        self.__dict_felinos = {}
+        self.__dict_caninos = {}
+        #self.__lista_mascotas = []
     
     def verificarExiste(self,historia):
-        for m in self.__lista_mascotas:
-            if historia == m.verHistoria():
-                return True
+        if historia in self.__dict_felinos:
+            return True
+        if historia in self.__dict_caninos:
+            return True
+        # for m in self.__lista_mascotas:
+        #     if historia == m.verHistoria():
+        #         return True
         #solo luego de haber recorrido todo el ciclo se retorna False
         return False
         
     def verNumeroMascotas(self):
-        return len(self.__lista_mascotas) 
+        return len(self.__dict_felinos) + len(self.__dict_caninos)
     
     def ingresarMascota(self,mascota):
-        self.__lista_mascotas.append(mascota) 
+        if mascota.verTipo().lower() == "felino":
+            self.__dict_felinos[mascota.verHistoria()] = mascota
+        else:
+            self.__dict_caninos[mascota.verHistoria()] = mascota
+        # self.__lista_mascotas.append(mascota) 
    
 
     def verFechaIngreso(self,historia):
         #busco la mascota y devuelvo el atributo solicitado
-        for masc in self.__lista_mascotas:
-            if historia == masc.verHistoria():
-                return masc.verFecha() 
+        if historia in self.__dict_felinos:
+            return self.__dict_felinos[historia].verFecha()
+        if historia in self.__dict_caninos:
+            return self.__dict_caninos[historia].verFecha()
+        # for masc in self.__lista_mascotas:
+        #     if historia == masc.verHistoria():
+        #         return masc.verFecha() 
         return None
 
     def verMedicamento(self,historia):
         #busco la mascota y devuelvo el atributo solicitado
-        for masc in self.__lista_mascotas:
-            if historia == masc.verHistoria():
-                return masc.verLista_Medicamentos() 
+        if historia in self.__dict_felinos:
+            return self.__dict_felinos[historia].verLista_Medicamentos()
+        if historia in self.__dict_caninos:
+            return self.__dict_caninos[historia].verLista_Medicamentos()
+        # for masc in self.__lista_mascotas:
+        #     if historia == masc.verHistoria():
+        #         return masc.verLista_Medicamentos() 
         return None
     
     def eliminarMascota(self, historia):
-        for masc in self.__lista_mascotas:
-            if historia == masc.verHistoria():
-                self.__lista_mascotas.remove(masc)  #opcion con el pop
-                return True  #eliminado con exito
+        if historia in self.__dict_felinos:
+            self.__dict_felinos.pop(historia)
+            return True
+        # for masc in self.__lista_mascotas:
+        #     if historia == masc.verHistoria():
+        #         self.__lista_mascotas.remove(masc)  #opcion con el pop
+        #         return True  #eliminado con exito
         return False 
 
 def main():
